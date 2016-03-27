@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    public static class Calculator
+    public static class Calculate
     {
         private static bool isOpt(char x)
         {
