@@ -30,8 +30,9 @@ namespace Calculator
                 return -1;
         }
 
-        public static String nifixToPost(String nifixString, out bool hasDemical, out bool error)
+        public static String infixToPost(String infixString, out bool hasDemical, out bool error)
         {
+            infixString = infixString.Replace(" ", "");
             Stack<char> s = new Stack<char>();
             bool hasNum = false;
             bool hasDemicalDuringScan = false;
@@ -43,37 +44,37 @@ namespace Calculator
             hasDemical = false;
             error = false;
 
-            for (int i = 0; i < nifixString.Length; i++)
+            for (int i = 0; i < infixString.Length; i++)
             {
                 if (i == 0)
                 {
-                    if (nifixString[i] == '-')
+                    if (infixString[i] == '-')
                     {
                         minusFlag = true;
                         i++;
                     }
-                    else if (nifixString[i] == '(') ;
-                    else if (isOpt(nifixString[i]))
+                    else if (infixString[i] == '(') ;
+                    else if (isOpt(infixString[i]))
                     {
                         error = true;
                         return "ERROR-Expression begin with wrong character!";
                     }
                 }
-                if (isNum(nifixString[i]))
+                if (isNum(infixString[i]))
                 {
                     hasNum = true;
-                    tmpNum = tmpNum * 10 + (nifixString[i] - '0');
+                    tmpNum = tmpNum * 10 + (infixString[i] - '0');
                     if (hasDemicalDuringScan)
                         demicalDigitsNum *= 10;
                 }
-                else if (isOpt(nifixString[i]))
+                else if (isOpt(infixString[i]))
                 {
                     if (i > 0)
                     {
-                        if (nifixString[i] == '-' && nifixString[i - 1] == '(') ;
-                        else if (nifixString[i] == '(' && isOpt(nifixString[i - 1]) && nifixString[i - 1] != ')') ;
-                        else if (nifixString[i - 1] == ')') ;
-                        else if (isNum(nifixString[i - 1])) ;
+                        if (infixString[i] == '-' && infixString[i - 1] == '(') ;
+                        else if (infixString[i] == '(' && isOpt(infixString[i - 1]) && infixString[i - 1] != ')') ;
+                        else if (infixString[i - 1] == ')') ;
+                        else if (isNum(infixString[i - 1])) ;
                         else
                         {
                             error = true;
@@ -107,16 +108,16 @@ namespace Calculator
                             res += "/ ";
                         }
                     }
-                    if (nifixString[i] == '(')
+                    if (infixString[i] == '(')
                     {
-                        s.Push(nifixString[i]);
-                        if (i + 1 < nifixString.Length && nifixString[i + 1] == '-')
+                        s.Push(infixString[i]);
+                        if (i + 1 < infixString.Length && infixString[i + 1] == '-')
                         {
                             minusFlag = true;
                             i++;
                         }
                     }
-                    else if (nifixString[i] == ')')
+                    else if (infixString[i] == ')')
                     {
                         if (s.Count == 0)
                         {
@@ -144,7 +145,7 @@ namespace Calculator
                             if (s.Count == 0)
                                 break;
                             tmpTop = s.Pop();
-                            if (priority(nifixString[i]) > priority(tmpTop))
+                            if (priority(infixString[i]) > priority(tmpTop))
                             {
                                 flag = true;
                                 break;
@@ -154,10 +155,10 @@ namespace Calculator
                         }
                         if (flag)
                             s.Push(tmpTop);
-                        s.Push(nifixString[i]);
+                        s.Push(infixString[i]);
                     }
                 }
-                else if (nifixString[i] == '.')
+                else if (infixString[i] == '.')
                 {
                     if (hasDemicalDuringScan || !hasNum)
                     {
@@ -233,7 +234,7 @@ namespace Calculator
                         case '+': s.Push(new Number(a + b)); break;
                         case '-': s.Push(new Number(a - b)); break;
                         case '*': s.Push(new Number(a * b)); break;
-                        case '/': s.Push(new Number(a / b)); break;
+                        case '/': if (b.getNumerator == 0) return "ERROR-Divide error!"; s.Push(new Number(a / b)); break;
                         default: return "ERROR-Illegal character";
                     }
                 }
