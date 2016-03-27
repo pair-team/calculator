@@ -10,6 +10,7 @@ namespace cal_cmd
     {
         static void Main(string[] args)
         {
+            /*
             Number n1 = new Number(1, 2), n2 = new Number(1, 4);
             Number n3 = new Number(n1 + n2);
             Number n4 = new Number(n1 - n2);
@@ -26,11 +27,12 @@ namespace cal_cmd
             String str = "-5";
             Console.WriteLine("{0}", Convert.ToDouble(str));
             Console.WriteLine("now enter: ");
+            */
             while(true)
             {
                 String tmp = Console.ReadLine();
                 bool a, b;
-                Console.WriteLine("   \"{0}\"", Calculator.nifixToPost(tmp, out a, out b));
+                Console.WriteLine("   {0}", Calculator.nifixToPost(tmp, out a, out b));
                 Console.WriteLine("   {0}", Calculator.postCalculate(Calculator.nifixToPost(tmp, out a, out b), a, b, true, 8));
                 Console.WriteLine("   {0}", Calculator.postCalculate(Calculator.nifixToPost(tmp, out a, out b), a, b, false, 0));
             }
