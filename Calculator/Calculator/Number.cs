@@ -46,6 +46,8 @@ namespace Calculator
 
         private static long findGCD(long numOne, long numTwo)
         {
+            numOne = Math.Abs(numOne);
+            numTwo = Math.Abs(numTwo);
             if (numOne == 0 && numTwo == 0)
                 return 1;
 
