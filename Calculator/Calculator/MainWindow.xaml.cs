@@ -77,6 +77,10 @@ namespace Calculator
             {
                 return 6;
             }
+            else if(check=="<—")
+            {
+                return 7;
+            }
             else 
             {
                 return -1;
@@ -145,10 +149,15 @@ namespace Calculator
             else if(recCheck == 4)
             {
                 String exception = outputLabel.Content.ToString();
+                exception += ("  " + mainLabel.Content.ToString());
                 while(cntBracket > 0)
                 {
                     exception += ")";
                 }
+                bool hasDemical, error;
+                String infixToPost = Calculate.infixToPost(exception, out hasDemical, out error);
+                String answer = Calculate.postCalculate(infixToPost, hasDemical, error, true, 2);
+                mainLabel.Content = answer;
                 outputLabel.Content = "";
                 cntNum = 0;
                 cntBracket = 0;
@@ -175,6 +184,19 @@ namespace Calculator
                     mainLabel.Content += ".";
                     flagPoint = true;
                     flagNum = true;
+                }
+            }
+            else if(recCheck == 7)
+            {
+                String tmp = mainLabel.Content.ToString();
+                if(tmp.Length == 1)
+                {
+                    mainLabel.Content = "0";
+                }
+                else
+                {
+                    tmp = tmp.Remove(tmp.Length - 1, 1);
+                    mainLabel.Content = tmp;
                 }
             }
             else
