@@ -153,6 +153,7 @@ namespace Calculator
                 while(cntBracket > 0)
                 {
                     exception += ")";
+                    cntBracket--;
                 }
                 String answer = Calculate.startCalculate(exception, -1);
                 mainLabel.Content = answer;
