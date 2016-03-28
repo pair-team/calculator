@@ -30,7 +30,7 @@ namespace Calculator
                 return -1;
         }
 
-        public static String infixToPost(String infixString, out bool hasDemical, out bool error)
+        private static String infixToPost(String infixString, out bool hasDemical, out bool error)
         {
             infixString = infixString.Replace(" ", "");
             Stack<char> s = new Stack<char>();
@@ -214,7 +214,7 @@ namespace Calculator
             return res.Substring(0, res.Length - 1);
         }
 
-        public static String postCalculate(String postString, bool hasDemical, bool error, bool hasPricision, int precision)
+        private static String postCalculate(String postString, bool hasDemical, bool error, bool hasPrecision, int precision)
         {
             Stack<Number> s = new Stack<Number>();
             if (postString.Length >= 5 && postString.Substring(0, 5).Equals("ERROR"))
@@ -243,12 +243,25 @@ namespace Calculator
             }
             if (s.Count > 1)
                 return "ERROR";
-            if (hasPricision)
+            if (hasPrecision)
                 return s.Pop().toString(precision);
             else if (hasDemical)
                 return s.Pop().toString(hasDemical);
             else
                 return s.Pop().toString();
+        }
+        /*
+         * 传入两个参数分别为中缀表达式以及小数位保留的位数precision
+         * precisi<=0意味着用户未强制保留小数位，程序由计算结果自动输出（分数或小数）
+         */
+        public static String startCalculate(String infixString, int precision)
+        {
+            bool hasDemical, error, hasPrecision;
+            if (precision <= 0)
+                hasPrecision = false;
+            else
+                hasPrecision = true;
+            return postCalculate(infixToPost(infixString, out hasDemical, out error), hasDemical, error, hasPrecision, precision);
         }
     }
 }
