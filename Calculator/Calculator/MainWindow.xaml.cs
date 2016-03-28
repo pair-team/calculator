@@ -139,7 +139,7 @@ namespace Calculator
             }
             else if(recCheck == 3)
             {
-                if(cntBracket > 0)
+                if(cntBracket > 0 && flagNum)
                 {
                     outputLabel.Content += ("  " + mainLabel.Content + "  " + btn.Content);
                     mainLabel.Content = "";
