@@ -3,6 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="#F7F7F7F7" />
+        </Style>
     </Application.Resources>
 </Application>
