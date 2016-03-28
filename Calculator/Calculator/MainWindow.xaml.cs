@@ -154,9 +154,7 @@ namespace Calculator
                 {
                     exception += ")";
                 }
-                bool hasDemical, error;
-                String infixToPost = Calculate.infixToPost(exception, out hasDemical, out error);
-                String answer = Calculate.postCalculate(infixToPost, hasDemical, error, true, 2);
+                String answer = Calculate.startCalculate(exception, -1);
                 mainLabel.Content = answer;
                 outputLabel.Content = "";
                 cntNum = 0;
