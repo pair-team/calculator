@@ -134,7 +134,7 @@ namespace Calculator
             else if(recCheck == 2)
             {
                 outputLabel.Content += ("  " + btn.Content);
-                firstClickOp = true;
+                firstClickOp = false;
                 cntBracket++;
             }
             else if(recCheck == 3)

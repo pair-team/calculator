@@ -33,15 +33,31 @@ namespace Calculator
         public Number(long numerator, long denominator)
         {
             long gcd = findGCD(numerator, denominator);
-            this.numerator = numerator / gcd;
-            this.denominator = denominator / gcd;
+            if (denominator > 0)
+            {
+                this.numerator = numerator / gcd;
+                this.denominator = denominator / gcd;
+            }
+            else
+            {
+                this.numerator = -numerator / gcd;
+                this.denominator = -denominator / gcd;
+            }
         }
 
         public Number(Number num)
         {
             long gcd = findGCD(num.getNumerator, num.getDenomintaor);
-            this.numerator = num.getNumerator / gcd;
-            this.denominator = num.getDenomintaor / gcd;
+            if (num.getDenomintaor > 0)
+            {
+                this.numerator = num.getNumerator / gcd;
+                this.denominator = num.getDenomintaor / gcd;
+            }
+            else
+            {
+                this.numerator = -num.getNumerator / gcd;
+                this.denominator = -num.getDenomintaor / gcd;
+            }
         }
 
         private static long findGCD(long numOne, long numTwo)
