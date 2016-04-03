@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Calculator
 {
@@ -32,6 +33,7 @@ namespace Calculator
 
         private static String infixToPost(String infixString, out bool hasDemical, out bool error)
         {
+            Debug.WriteLine(infixString);
             infixString = infixString.Replace(" ", "");
             Stack<char> s = new Stack<char>();
             bool hasNum = false;
@@ -216,6 +218,7 @@ namespace Calculator
 
         private static String postCalculate(String postString, bool hasDemical, bool error, bool hasPrecision, int precision)
         {
+            Debug.WriteLine(postString);
             Stack<Number> s = new Stack<Number>();
             if (postString.Length >= 5 && postString.Substring(0, 5).Equals("ERROR"))
                 return postString;
@@ -242,7 +245,7 @@ namespace Calculator
                     s.Push(new Number(Convert.ToInt64(i)));
             }
             if (s.Count > 1)
-                return "ERROR";
+                return "ERROR-Count > 1";
             if (hasPrecision)
                 return s.Pop().toString(precision);
             else if (hasDemical)

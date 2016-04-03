@@ -26,6 +26,8 @@ namespace Calculator
         private bool flagPoint;
         private bool firstClickOp;
         private int cntBracket;
+        private bool flagRightBracket;
+        private bool flagLeftBracket;
 
         public MainWindow()
         {
@@ -43,6 +45,8 @@ namespace Calculator
             flagNum = false;
             flagPoint = false;
             firstClickOp = false;
+            flagLeftBracket = false;
+            flagRightBracket = false;
         }
 
         private int CheckCharacter(String check)
@@ -102,7 +106,18 @@ namespace Calculator
                         tmp += "  ";
                         outputLabel.Content = tmp;
                     }
-                    outputLabel.Content += (mainLabel.Content + "  " + btn.Content);
+                    if (flagRightBracket)
+                    {
+                        flagRightBracket = false;
+                        outputLabel.Content += ("" + btn.Content);
+                    }
+                    else if (flagLeftBracket)
+                    {
+                        flagLeftBracket = false;
+                        outputLabel.Content += ("  " + mainLabel.Content + "  " + btn.Content);
+                    }
+                    else
+                        outputLabel.Content += (mainLabel.Content + "  " + btn.Content);
                     flagOp = true;
                     firstClickOp = true;
                 }
@@ -127,13 +142,19 @@ namespace Calculator
                 }
                 else
                 {
-                    mainLabel.Content += tmpNum;
+                    if (Convert.ToDouble(mainLabel.Content) == 0)
+                        mainLabel.Content = tmpNum;
+                    else
+                        mainLabel.Content += tmpNum;
                 }
                 flagOp = false;
             }
             else if(recCheck == 2)
             {
+                flagOp = false;
+                flagLeftBracket = true;
                 outputLabel.Content += ("  " + btn.Content);
+                mainLabel.Content = "0";
                 firstClickOp = false;
                 cntBracket++;
             }
@@ -141,18 +162,24 @@ namespace Calculator
             {
                 if(cntBracket > 0 && flagNum)
                 {
+                    flagOp = false;
+                    flagRightBracket = true;
                     outputLabel.Content += ("  " + mainLabel.Content + "  " + btn.Content);
-                    mainLabel.Content = "";
+                    mainLabel.Content = "0";
                     cntBracket--;
                 }
             }
             else if(recCheck == 4)
             {
-                String exception = outputLabel.Content.ToString();
-                exception += ("  " + mainLabel.Content.ToString());
+                String exception = "";
+                if (outputLabel.Content != null)
+                    exception = outputLabel.Content.ToString();
+                if (!flagRightBracket)
+                    exception += ("  " + mainLabel.Content.ToString());
                 while(cntBracket > 0)
                 {
                     exception += ")";
+                    cntBracket--;
                 }
                 String answer = Calculate.startCalculate(exception, -1);
                 mainLabel.Content = answer;
@@ -163,6 +190,8 @@ namespace Calculator
                 flagPoint = false;
                 flagNum = false;
                 firstClickOp = false;
+                flagLeftBracket = false;
+                flagRightBracket = false;
             }
             else if(recCheck == 5)
             {
