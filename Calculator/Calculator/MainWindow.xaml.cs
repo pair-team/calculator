@@ -144,10 +144,7 @@ namespace Calculator
                 }
                 else
                 {
-                    if (Convert.ToDouble(mainLabel.Content) == 0)
-                        mainLabel.Content = tmpNum;
-                    else
-                        mainLabel.Content += tmpNum;
+                    mainLabel.Content += tmpNum;
                 }
                 flagOp = false;
             }
