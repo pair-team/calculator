@@ -26,7 +26,8 @@ namespace Calculator
 
         private void Precision_Control(object sender, RoutedEventArgs e)
         {
-            MainWindow.precision = Convert.ToInt32(precisionControl.Text);
+            if(isNumberic(precisionControl.Text))
+                MainWindow.precision = Convert.ToInt32(precisionControl.Text);
             this.Close();
         }
 

@@ -221,6 +221,13 @@ namespace Calculator
                 if(tmp.Length == 1)
                 {
                     mainLabel.Content = "0";
+                    flagNum = false;
+                }
+                else if (tmp[tmp.Length - 1].Equals('.'))
+                {
+                    tmp = tmp.Remove(tmp.Length - 1, 1);
+                    mainLabel.Content = tmp;
+                    flagPoint = false;
                 }
                 else
                 {
