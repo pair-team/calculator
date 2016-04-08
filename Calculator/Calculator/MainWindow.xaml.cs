@@ -22,6 +22,7 @@ namespace Calculator
     {
         private bool flagOp;
         private int cntNum;
+        public static int precision;
         private bool flagNum;
         private bool flagPoint;
         private bool firstClickOp;
@@ -40,6 +41,7 @@ namespace Calculator
                 }
             }
             cntNum = 0;
+            precision = 0;
             cntBracket = 0;
             flagOp = false;
             flagNum = false;
@@ -160,7 +162,7 @@ namespace Calculator
             }
             else if(recCheck == 3)
             {
-                if(cntBracket > 0)
+                if(cntBracket > 0 && flagNum)
                 {
                     flagOp = false;
                     flagRightBracket = true;
@@ -181,7 +183,7 @@ namespace Calculator
                     exception += ")";
                     cntBracket--;
                 }
-                String answer = Calculate.startCalculate(exception, -1);
+                String answer = Calculate.startCalculate(exception, precision);
                 mainLabel.Content = answer;
                 outputLabel.Content = "";
                 cntNum = 0;
@@ -231,5 +233,35 @@ namespace Calculator
                 MessageBox.Show("出现异常！");
             }
         }
+
+        private void menu_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            menu.Visibility = Visibility.Visible;
+        }
+
+        private void menu_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            menu.Visibility = Visibility.Collapsed;
+        }
+
+        private void menu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            menu.Visibility = Visibility.Visible;
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.SystemKey == Key.LeftAlt || e.SystemKey == Key.RightAlt)
+            {
+                if (menu.Visibility != Visibility.Visible) menu.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Precision_Click(object sender, RoutedEventArgs e)
+        {
+            PrecisionWindow newPrecisionWindow = new PrecisionWindow();
+            newPrecisionWindow.ShowDialog();
+        }
+        
     }
 }
